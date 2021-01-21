@@ -917,6 +917,7 @@ print("MAPE:", np.mean(np.abs((xgbdf_test['y'] - y_test_pred) / xgbdf_test['y'])
 
 # COMMAND ----------
 
+# libraries for LSTM implementation
 from keras.models import Sequential
 from keras.preprocessing.sequence import TimeseriesGenerator
 from keras.layers import Dense, LSTM
