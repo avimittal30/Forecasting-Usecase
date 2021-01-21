@@ -870,6 +870,8 @@ print("MAPE2 with default ", mape2)
 
 # COMMAND ----------
 
+#XGBoost Implementation
+
 import xgboost as xgb
 import numpy as np
 xgbdf_train=filtered[filtered['year']<2017]
@@ -901,9 +903,48 @@ display(df_xgb)
 
 # COMMAND ----------
 
+# XGBoost Evaluation
+
 df_xgb_monthly=df_xgb.groupby("month_year", as_index=False).sum()
 display(df_xgb_monthly)
 print("MAPE:", np.mean(np.abs((xgbdf_test['y'] - y_test_pred) / xgbdf_test['y'])) * 100)
+
+
+# COMMAND ----------
+
+!pip install keras
+!pip install tensorflow
+
+# COMMAND ----------
+
+from keras.models import Sequential
+from keras.preprocessing.sequence import TimeseriesGenerator
+from keras.layers import Dense, LSTM
+
+
+
+# COMMAND ----------
+
+from sklearn.preprocessing import MinMaxScaler
+
+
+lstmdf_train=filtered[filtered['year']<2017]
+lstmdf_test=filtered[filtered['year']>=2017]
+
+scaler=MinMaxScaler()
+
+lstmdf_train=lstmdf_train[['ds', 'y']]
+lstmdf_train.set_index(['ds'], inplace=True)
+lstmdf_test=lstmdf_test[['ds', 'y']]
+lstmdf_test.set_index(['ds'], inplace=True)
+
+scaler.fit(lstmdf_train)
+
+scaled_train=scaler.transform(lstmdf_train)
+scaled_test=scaler.transform(lstmdf_test)
+
+train_data_gen = TimeseriesGenerator(scaled_train,scaled_train,length=120, sampling_rate=1,stride=1,batch_size=3)
+train_data_gen
 
 
 # COMMAND ----------
