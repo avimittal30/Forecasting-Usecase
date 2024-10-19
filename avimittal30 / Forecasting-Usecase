@@ -6,8 +6,7 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Demand Forecasting Model in Azure Data Bricks 
-# MAGIC ###### Deepanker Anand, Aviral Mittal
+
 # MAGIC ###### Jan 2021
 # MAGIC 
 # MAGIC This notebook will show you how to create and query a table or DataFrame that you uploaded to DBFS. [DBFS](https://docs.databricks.com/user-guide/dbfs-databricks-file-system.html) is a Databricks File System that allows you to store data for querying inside of Databricks. This notebook assumes that you have a file already inside of DBFS that you would like to read from.
